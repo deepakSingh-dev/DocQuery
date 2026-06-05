@@ -3,21 +3,27 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from rag.retriever import retrieve
-from rag.generator import generate
+from agent.graph import run_agent
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        print("Usage: python3 scripts/ask.py \"your question here\"")
+    args = sys.argv[1:]
+
+    if not args or args[0].startswith("-") and args[0] != "--verbose":
+        print("Usage: python3 scripts/ask.py \"your question\" [--verbose]")
         sys.exit(1)
 
-    query = sys.argv[1]
+    verbose = "--verbose" in args
+    query_args = [a for a in args if a != "--verbose"]
+    query = " ".join(query_args)
 
-    chunks = retrieve(query)
-    result = generate(query, chunks)
+    if not verbose:
+        import logging
+        logging.disable(logging.WARNING)
 
-    if not result.has_sufficient_context:
+    result = run_agent(query)
+
+    if result is None or not result.has_sufficient_context:
         print("\n⚠️  Not enough relevant content found in your documents.")
         return
 
