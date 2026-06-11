@@ -34,7 +34,7 @@ def _generate_summary(text_sample: str, source: str) -> str:
         response = requests.post(
             f"{OLLAMA_BASE_URL}/api/generate",
             json={"model": LLM_MODEL, "prompt": prompt, "stream": False},
-            timeout=120,
+            timeout=300,
         )
         response.raise_for_status()
         return response.json().get("response", "").strip()
@@ -83,23 +83,35 @@ def ingest_document(filepath: str) -> dict:
 
     chunks = [c for c in chunks if c["text"].strip()]
 
-    all_text = " ".join(p.get("text", "") for p in pages)
-    summary = _generate_summary(all_text, source)
-    if summary:
-        chunks.append({
-            "id": f"{source}_summary",
-            "text": summary,
-            "source": source,
-            "page_number": 0,
-            "chunk_index": 9999,
-            "modality": "summary",
-        })
-
     texts = [c["text"] for c in chunks]
     embeddings = embed(texts)
 
     collection = get_or_create_collection()
     store_chunks(collection, chunks, embeddings)
 
-    logger.info(f"[Celery] Done: {len(chunks)} chunks stored for {source}")
-    return {"status": "success", "chunks_stored": len(chunks), "source": source}
+    stored_count = len(chunks)
+    logger.info(f"[Celery] Core ingestion done: {stored_count} chunks for {source}")
+
+    # Summary is best-effort and entirely optional. The whole block is wrapped
+    # so that ANY failure (LLM timeout, Ollama saturated, embed error) only logs
+    # a warning — core ingestion has already succeeded and the task must not fail.
+    try:
+        all_text = " ".join(p.get("text", "") for p in pages)
+        summary = _generate_summary(all_text, source)
+        if summary:
+            summary_chunk = [{
+                "id": f"{source}_summary",
+                "text": summary,
+                "source": source,
+                "page_number": 0,
+                "chunk_index": 9999,
+                "modality": "summary",
+            }]
+            summary_embeddings = embed([summary])
+            store_chunks(collection, summary_chunk, summary_embeddings)
+            stored_count += 1
+            logger.info(f"[Celery] Summary chunk stored for {source}")
+    except Exception as e:
+        logger.warning(f"[Celery] Summary step skipped (non-fatal): {e}")
+
+    return {"status": "success", "chunks_stored": stored_count, "source": source}

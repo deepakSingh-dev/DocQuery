@@ -47,7 +47,18 @@ def _parse_response(raw: str, query: str) -> CitedAnswer:
         raise ValueError("No JSON found in response")
 
     data = json.loads(raw[start:end])
-    citations = [Citation(**c) for c in data.get("citations", [])]
+
+    # The LLM doesn't always respect the 100-char excerpt limit, so defensively
+    # truncate rather than letting Pydantic validation reject the whole response.
+    citations = []
+    for c in data.get("citations", []):
+        if isinstance(c.get("excerpt"), str) and len(c["excerpt"]) > 100:
+            c["excerpt"] = c["excerpt"][:97].rstrip() + "..."
+        try:
+            citations.append(Citation(**c))
+        except Exception as ce:
+            logger.warning(f"Skipping malformed citation {c}: {ce}")
+
     return CitedAnswer(
         answer=data.get("answer", raw.strip()),
         citations=citations,

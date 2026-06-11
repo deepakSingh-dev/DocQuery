@@ -52,6 +52,23 @@ def list_documents() -> list[DocumentInfo]:
     ]
 
 
+@router.get("/documents/task/{task_id}")
+def get_task_status(task_id: str) -> dict:
+    if task_id == "sync":
+        return {"task_id": task_id, "status": "SUCCESS", "result": None}
+    try:
+        from celery.result import AsyncResult
+        from tasks.ingest_task import celery_app
+        result = AsyncResult(task_id, app=celery_app)
+        return {
+            "task_id": task_id,
+            "status": result.status,
+            "result": result.result if result.ready() else None,
+        }
+    except Exception as e:
+        return {"task_id": task_id, "status": "UNKNOWN", "result": None, "error": str(e)}
+
+
 @router.delete("/documents/{filename}")
 def delete_document(filename: str) -> dict:
     collection = get_or_create_collection()

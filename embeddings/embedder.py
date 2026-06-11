@@ -33,8 +33,9 @@ def embed(texts: list[str]) -> list[list[float]]:
 
 def _check_ollama():
     try:
-        requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=5)
+        requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=15)
     except requests.exceptions.ConnectionError:
-        raise RuntimeError(
-            "Cannot reach Ollama. Start it with: ollama serve"
-        )
+        raise RuntimeError("Cannot reach Ollama. Start it with: ollama serve")
+    except requests.exceptions.ReadTimeout:
+        # Ollama is running but busy (e.g. loading a model) — proceed
+        pass
