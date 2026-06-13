@@ -1,3 +1,8 @@
+"""File watcher.
+
+Watches the uploads/ folder and automatically enqueues a Celery ingestion task
+whenever a new document appears, ignoring temporary and hidden files.
+"""
 import sys
 import time
 from pathlib import Path

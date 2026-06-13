@@ -1,3 +1,9 @@
+"""FastAPI application.
+
+Application entry point: mounts the health, documents, and chat routers,
+configures CORS for the Next.js frontend, and verifies Ollama connectivity on
+startup via the lifespan handler.
+"""
 import logging
 import os
 from contextlib import asynccontextmanager

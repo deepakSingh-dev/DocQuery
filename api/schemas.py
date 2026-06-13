@@ -1,3 +1,9 @@
+"""API schemas.
+
+Pydantic request/response models that define the public contract of the API:
+questions, cited answers, document info, upload acknowledgements, and the
+health report.
+"""
 from pydantic import BaseModel
 
 

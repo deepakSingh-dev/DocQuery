@@ -1,3 +1,9 @@
+"""Citation schema.
+
+Pydantic models that define the contract for a grounded answer: a list of
+source/page/excerpt citations plus a self-assessed confidence and a flag
+indicating whether the retrieved context was sufficient to answer.
+"""
 from pydantic import BaseModel, Field
 
 

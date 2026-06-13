@@ -1,3 +1,9 @@
+"""Documents route.
+
+Endpoints to manage the document corpus: upload a file (queuing async
+ingestion), list ingested documents with their chunk and modality stats, poll a
+task's status, and delete a document along with its vectors.
+"""
 import os
 from collections import defaultdict
 from pathlib import Path

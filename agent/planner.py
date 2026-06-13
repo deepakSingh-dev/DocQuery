@@ -1,3 +1,9 @@
+"""Planner.
+
+An LLM-based task router that classifies an incoming query into one of three
+execution routes — answer_from_docs, search_web, or run_code — falling back to
+document RAG when the model returns anything unexpected.
+"""
 import logging
 import os
 

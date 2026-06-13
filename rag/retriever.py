@@ -1,3 +1,9 @@
+"""Retriever.
+
+Thin RAG retrieval layer over the vector store: runs a similarity search and
+filters out hits below a confidence threshold, returning an empty list rather
+than raising when nothing is relevant enough.
+"""
 from vectordb.store import get_or_create_collection
 from vectordb.search import search
 

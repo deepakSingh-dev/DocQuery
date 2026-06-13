@@ -1,3 +1,9 @@
+"""MCP server.
+
+Exposes the document-intelligence tools — web_search, run_python, and
+read_file — over the Model Context Protocol on a stdio transport so they can be
+consumed by any MCP-compatible client.
+"""
 import sys
 from pathlib import Path
 
