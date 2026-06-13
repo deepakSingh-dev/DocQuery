@@ -1,3 +1,9 @@
+"""Code execution tool.
+
+Runs Python in an isolated subprocess with a hard timeout, capturing stdout and
+stderr. Basic safety filtering strips imports of sensitive modules before
+execution; it is a guardrail, not a full sandbox.
+"""
 import subprocess
 import sys
 import tempfile

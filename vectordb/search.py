@@ -1,3 +1,9 @@
+"""Vector search.
+
+Embeds a query and runs a similarity search against the ChromaDB collection,
+returning hits with a normalised relevance score (1 - cosine distance) sorted
+from most to least relevant.
+"""
 import chromadb
 
 from embeddings.embedder import embed

@@ -1,3 +1,9 @@
+"""Answer generation.
+
+Builds a citation-aware prompt from retrieved chunks, calls the LLM, and parses
+the response into a structured CitedAnswer. Designed to never hallucinate: it
+returns an explicit "insufficient context" answer when no chunks are supplied.
+"""
 import json
 import logging
 import os

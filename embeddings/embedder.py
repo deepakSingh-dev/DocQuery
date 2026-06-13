@@ -1,3 +1,9 @@
+"""Embedding client.
+
+Generates dense vector embeddings for text via Ollama's nomic-embed-text
+model, batching requests to bound memory use. Fails fast with a clear message
+when Ollama is unreachable.
+"""
 import os
 
 import requests

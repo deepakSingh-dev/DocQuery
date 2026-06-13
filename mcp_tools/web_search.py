@@ -1,3 +1,9 @@
+"""Web search tool.
+
+Performs a keyless DuckDuckGo search and formats the top results as a single
+string. Network errors are caught and returned as a message so callers never
+have to handle exceptions.
+"""
 from duckduckgo_search import DDGS
 
 

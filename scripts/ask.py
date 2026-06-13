@@ -1,3 +1,9 @@
+"""Ask CLI.
+
+Command-line entry point for end-to-end question answering: runs the LangGraph
+agent for a question and prints the cited answer, with an optional --verbose
+flag to show the full agent trace.
+"""
 import sys
 from pathlib import Path
 

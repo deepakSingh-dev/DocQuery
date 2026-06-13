@@ -1,3 +1,8 @@
+"""Health route.
+
+Reports the reachability of the three backing services — Ollama, ChromaDB, and
+Redis — so the frontend can surface system status at a glance.
+"""
 import os
 
 import redis as redis_client

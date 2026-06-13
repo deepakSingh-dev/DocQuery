@@ -1,3 +1,9 @@
+"""Text chunking.
+
+Splits page text into overlapping word-windows for embedding, while keeping
+tables and image captions as single, unsplit chunks. Each chunk carries the
+metadata (source, page, modality) needed for downstream citations.
+"""
 CHUNK_SIZE = 500   # words
 OVERLAP = 50       # words
 

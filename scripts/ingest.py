@@ -1,3 +1,9 @@
+"""Ingest CLI.
+
+Command-line entry point that runs the full ingestion pipeline for a single
+file (loader -> extractor -> vision -> chunker -> embedder -> store), printing
+progress at each step.
+"""
 import argparse
 import sys
 from pathlib import Path

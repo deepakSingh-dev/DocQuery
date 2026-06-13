@@ -1,3 +1,8 @@
+"""Search CLI.
+
+Interactive command-line loop for running semantic searches against the vector
+store and inspecting the top matches with their scores and metadata.
+"""
 import sys
 from pathlib import Path
 
