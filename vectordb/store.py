@@ -1,3 +1,9 @@
+"""Vector store.
+
+Manages the persistent ChromaDB collection: connecting to the on-disk client
+and upserting chunks with their embeddings and metadata. Chunk IDs are used as
+document IDs so re-ingesting the same file updates rather than duplicates.
+"""
 import os
 
 import chromadb

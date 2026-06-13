@@ -1,3 +1,8 @@
+"""Document discovery.
+
+Recursively scans a folder for supported documents (PDF and TXT), skipping
+hidden and unsupported files, and returns lightweight metadata for each.
+"""
 import os
 from pathlib import Path
 

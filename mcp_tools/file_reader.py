@@ -1,3 +1,9 @@
+"""File reader tool.
+
+Reads a file from the uploads/ folder by name only, rejecting any path that
+contains separators or traversal sequences to prevent reading outside the
+allowed directory.
+"""
 import os
 from pathlib import Path
 

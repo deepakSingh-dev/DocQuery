@@ -1,3 +1,9 @@
+"""Async ingestion task.
+
+The Celery task that runs the full ingestion pipeline off the request path:
+load, extract, caption, chunk, embed, and store a document, then generate and
+store a one-paragraph LLM summary as an extra chunk.
+"""
 import logging
 import os
 import sys

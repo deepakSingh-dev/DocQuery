@@ -1,3 +1,9 @@
+"""Chat route.
+
+Question-answering endpoints: a synchronous POST that runs the full LangGraph
+agent, and a WebSocket that streams answer tokens in real time and sends a final
+citation block once generation completes.
+"""
 import asyncio
 import json
 import os

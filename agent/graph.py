@@ -1,3 +1,9 @@
+"""Agent graph.
+
+Wires the agent nodes into a LangGraph state machine: a planner routes each
+query to document RAG, web search, or code execution, and the RAG path
+self-corrects by re-querying until confidence is high (capped at 3 attempts).
+"""
 from typing import TypedDict
 
 from langgraph.graph import StateGraph, END

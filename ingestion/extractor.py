@@ -1,3 +1,9 @@
+"""Content extraction.
+
+Extracts page-level text via PyMuPDF and tables via Camelot (rendered to
+Markdown). Encrypted or unreadable PDFs are handled gracefully and produce an
+empty result rather than raising.
+"""
 import logging
 import fitz  # PyMuPDF
 

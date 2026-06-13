@@ -1,3 +1,9 @@
+"""Vision captioning.
+
+Renders a PDF page that contains embedded images and sends it to the
+multimodal LLM (llama3.2-vision) to produce a natural-language caption of its
+visual content. Returns None when the page has no images or Ollama is slow.
+"""
 import base64
 import logging
 import os

@@ -1,3 +1,9 @@
+"""Agent nodes.
+
+The individual operations of the agentic RAG loop — retrieve, evaluate,
+requery, and generate — each implemented as a function that reads from and
+mutates the shared graph state.
+"""
 import logging
 import os
 
